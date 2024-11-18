@@ -13,3 +13,5 @@ Route::get('/test', function () {
 });
 
 Route::get('/users', [StudentController::class, 'getUser']);
+Route::post('/users', [StudentController::class, 'createUser']);
+Route::put('/users/{id}', [StudentController::class, 'updateUser']);
