@@ -25,7 +25,7 @@ class StudentController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
 
-        if($validator->failed()){
+        if ($validator->failed()) {
             return response()->json(['error' => $validator->errors()], 400);
         }
 
@@ -65,5 +65,29 @@ class StudentController extends Controller
     function searchUserByName($name)
     {
         return Users::where('name', 'LIKE', '%' . $name . '%')->get();
+    }
+
+    //login user
+    function loginUser(Request $request)
+    {
+        $rules = array(
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:8|max:255'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->failed()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        $user = Users::where('email', $request->email)->first();
+
+        if ($user && $user->password == $request->password) {
+            $token = $user->createToken('authToken')->plainTextToken;
+            return response()->json(['message' => 'User authenticated successfully', 'token' => $token]);
+        } else {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
     }
 }
