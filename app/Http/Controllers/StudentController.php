@@ -34,4 +34,17 @@ class StudentController extends Controller
 
         return response()->json(['message' => 'User updated successfully'], 200);
     }
+
+    //Delete student
+    function deleteUser($id){
+        $user = Users::find($id);
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully'], 200);
+    }
+
+    //Get student by name
+    function searchUserByName($name){
+        return Users::where('name', 'LIKE', '%'.$name.'%')->get();
+    }
 }

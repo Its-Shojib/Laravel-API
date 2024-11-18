@@ -15,3 +15,6 @@ Route::get('/test', function () {
 Route::get('/users', [StudentController::class, 'getUser']);
 Route::post('/users', [StudentController::class, 'createUser']);
 Route::put('/users/{id}', [StudentController::class, 'updateUser']);
+Route::delete('/users/{id}', [StudentController::class, 'deleteUser']);
+//serach user by name
+Route::get('/users/search/{name}', [StudentController::class, 'searchUserByName']);
